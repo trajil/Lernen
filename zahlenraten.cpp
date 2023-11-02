@@ -6,6 +6,20 @@
 using namespace std;
 
 int main() {
+
+
+/*
+1. generate a random number 1-100, call it number_secret;
+2. generate a random_number2 between <number_secret and number_secret - 10>
+3. generate a random_number3 between <number_secret and number_secret + 10>
+4. let the player enter a number,
+        if entered_number is lower or higher than number_secret, the programm gives out a message accordingly;
+        if entered_number is same as number_secret, player wins, exit programm;
+        if entered_number is the same number as "solution", the programm prints number_secret;
+        if entered_number is the same number as "help", the programm prints random_number2 and random_number3 (randomized range of numbers NEAR the number_secret)
+
+*/
+
     
     // random number generator geheim
     random_device rd_1;
@@ -41,9 +55,10 @@ int main() {
     string zu_klein = "Deine Zahl ist zu klein!";
     string zu_gross = "Deine Zahl ist zu gross!";
     string bingo = "Wir haben ein Bingo!";
-
+    string welcome = "Rate die Zahl zwischen 1 und 100! (101 fuer Loesung, 102 fuer Tipp) ";
+    string hinweis_text = "Das Ergebnis ist zwischen " + to_string(hinweis_out_min) + " und " + to_string(hinweis_out_max);
     do {
-        cout << "Rate die Zahl zwischen 1 und 100! (101 fuer Loesung, 102 fuer Tipp) ";
+        cout << welcome ;
         cin >> rate;
         
         if (rate < geheim) {
@@ -53,7 +68,7 @@ int main() {
             cout << geheim << endl;
         }
         else if (rate == hinweis) {
-            cout << "Das Ergebnis ist zwischen " << hinweis_out_min << " und " << hinweis_out_max << endl;
+            cout << hinweis_text << endl;
         }
         else if (rate > geheim) {
             cout << zu_gross << endl;

@@ -7,6 +7,7 @@ int main() {
     double Verbrauch = distanz * möhren_pro_km;
 
 
+
     std::cout << Verbrauch <<std::endl;
 
 
