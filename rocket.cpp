@@ -11,7 +11,9 @@
 4. Each round has a loop: 
     1) speed is subtracted from alt (alt from previous round - speed from previous round)
     2) current gravity is calculated (gravity constant at new altitude)
-    3) 
+    3) speed is altered by gravity (speed + gravity)
+    4) the player shooses the thrust, it gets subtracted from the fuel (fuel - thrust)
+                                   1/10 gets subtracted from speed (speed - thrust/10)
 
 
 
