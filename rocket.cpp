@@ -65,6 +65,8 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
     - gravity: needs altitude adjustement (X)
     - negative altitude in launch scenario needs to be adressed (X)
 
+    - fine tuning the parametes... (XXX)
+
 */
 
 // Logic...
