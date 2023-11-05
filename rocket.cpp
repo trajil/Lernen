@@ -39,10 +39,10 @@
 
 // Constants
 const double time_count = 1;
-const double planet_mass_moon = 1;
-const double planet_mass_earth = 6;
-const double gravity_moon = 1.625; // Moon's gravity
-const double gravity_earth = 9.81; // Earth's gravity
+const double planet_mass_moon = 1; // work in progress...
+const double planet_mass_earth = 6; // work in progress...
+const double gravity_moon = 1.625; 
+const double gravity_earth = 9.81; 
 
 // Display
 void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
