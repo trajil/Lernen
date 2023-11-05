@@ -25,7 +25,7 @@ int main()
         {
             for (int j = 0; j < spalten_breite; j++)
             {
-                cout << "X";
+                cout << "Y";
             }
             
         cout << "X" << endl;
