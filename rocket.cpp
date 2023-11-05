@@ -35,6 +35,18 @@
             else the player loses;
 5. The game ends;
 
+
+  To-Do:
+
+    - speed: should be only positive (X)
+    - thrust: check for acceptability (V)
+    - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (X)
+    - altitude_start: should not be performed before round_1 (X)
+    - gravity: needs altitude adjustement (X)
+    - negative altitude in launch scenario needs to be adressed (X)
+
+    - fine tuning the parametes... (XXX)
+
 */
 
 // Constants
@@ -56,18 +68,7 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
     std::cout << "Planet Mass: " << planet_mass << "\n";
 }
 
-/*  To-Do:
 
-    - speed: should be only positive (X)
-    - thrust: check for acceptability (V)
-    - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (X)
-    - altitude_start: should not be performed before round_1 (X)
-    - gravity: needs altitude adjustement (X)
-    - negative altitude in launch scenario needs to be adressed (X)
-
-    - fine tuning the parametes... (XXX)
-
-*/
 
 // Logic...
 void runScenario(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
