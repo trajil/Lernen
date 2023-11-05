@@ -56,7 +56,7 @@ const double planet_mass_earth = 6; // work in progress...
 const double gravity_moon = 1.625; 
 const double gravity_earth = 9.81; 
 
-// Display
+// display
 void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
 {
     std::cout << "Scenario Parameters:\n";
@@ -68,9 +68,7 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
     std::cout << "Planet Mass: " << planet_mass << "\n";
 }
 
-
-
-// Logic...
+// logic...
 void runScenario(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
 {
     double altitude = altitude_start;
@@ -128,6 +126,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     }
 }
 
+// programm
 int main() 
 {
     int scenario;
