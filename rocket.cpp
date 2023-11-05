@@ -45,7 +45,7 @@ const double gravity_moon = 1.625;
 const double gravity_earth = 9.81; 
 
 // Display
-void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
+void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
 {
     std::cout << "Scenario Parameters:\n";
     std::cout << "Starting Altitude: " << altitude_start << " meters\n";
@@ -56,29 +56,31 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
     std::cout << "Planet Mass: " << planet_mass << "\n";
 }
 
-/*  still missing:
+/*  To-Do:
 
-    - check for not acceptable thrust
-    - full check for altitude_goal
-    - not right altitude at start
-    - right gravity calculation
-
+    - check for not acceptable thrust (V)
+    - full check for altitude_goal (X)
+    - not right altitude at start (X)
+    - right gravity calculation (X)
+    - negative altitude... (X)
 
 */
 
 // Logic...
-void runScenario(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
+void runScenario(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
 {
     double altitude = altitude_start;
     double speed = speed_start;
 
-    while (altitude != altitude_goal) {
+    while ((launch == true && altitude <= altitude_goal) || (launch == false && altitude >= altitude_goal))
+    {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
         
         altitude -= speed;
         speed += gravity * time_count/10;
 
         double thrust;
+        std::cout << "---------------" << std::endl;
         std::cout << "Current altitude: " << altitude << " meters\n";
         std::cout << "Current speed: " << speed << " m/s\n";
         std::cout << "Fuel left: " << fuel <<  " litres\n";
@@ -104,14 +106,20 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         speed -= (thrust / 3.0) * time_count;
     }
 
+    std::cout << "" << std::endl;
     std::cout << "Current altitude: " << altitude << " meters\n";
     std::cout << "Current speed: " << speed << " m/s\n";
     std::cout << "Fuel left: " << fuel <<  " litres\n";
     std::cout << "---------------" << std::endl;
+    std::cout << "" << std::endl;
 
-    if (speed == speed_goal) {
+    if (speed == speed_goal) 
+    {
+        std::cout << "" << std::endl;
         std::cout << "You won!" << std::endl;
-    } else {
+    } else 
+    {
+        std::cout << "" << std::endl;
         std::cout << "You've lost!" << std::endl;
     }
 }
@@ -119,10 +127,23 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
 int main() 
 {
     int scenario;
-    std::cout << "Choose a scenario:\n1. Launch to orbit moon\n2. Launch to orbit earth\n3. Landing on moon\n4. Landing on earth\n";
+
+    std::cout << "" << std::endl;
+    std::cout << "       |\n";
+    std::cout << "      / \\\n";
+    std::cout << "     / _ \\\n";
+    std::cout << "    |.o '.|\n";
+    std::cout << "    |'._.'|\n";
+    std::cout << "    |     |\n";
+    std::cout << "  ,'|  |  |  |`.\n";
+    std::cout << " /  |  |  |  |  \\\n";
+    std::cout << "|,-'--|--'-.| t.r.\n";
+    std::cout << "Hello, rocketman! Choose a scenario you wanna fly:\n1. Launch to orbit moon\n2. Launch to orbit earth\n3. Landing on moon\n4. Landing on earth\n";
+    std::cout << "" << std::endl;
     std::cin >> scenario;
 
     double altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass;
+    bool launch;
 
     switch (scenario) 
     {
@@ -133,6 +154,7 @@ int main()
             speed_goal = 50;
             fuel = 2000;
             planet_mass = planet_mass_moon;
+            launch = true;
             break;
         case 2:
             altitude_start = 0;
@@ -141,6 +163,7 @@ int main()
             speed_goal = 50;
             fuel = 2000;
             planet_mass = planet_mass_earth;
+            launch = true;
             break;
         case 3:
             altitude_start = 150;
@@ -149,6 +172,7 @@ int main()
             speed_goal = 2;
             fuel = 200;
             planet_mass = planet_mass_moon;
+            launch = false;
             break;
         case 4:
             altitude_start = 150;
@@ -157,15 +181,16 @@ int main()
             speed_goal = 2;
             fuel = 200;
             planet_mass = planet_mass_earth;
+            launch = false;
             break;
         default:
             std::cout << "Invalid scenario choice." << std::endl;
             return 0;
     }
 
-    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
+    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
 
-    runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
+    runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
 
     return 0;
 }
