@@ -58,11 +58,12 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
 
 /*  To-Do:
 
-    - check for not acceptable thrust (V)
-    - full check for altitude_goal (X)
-    - not right altitude at start (X)
-    - right gravity calculation (X)
-    - negative altitude... (X)
+    - speed: should be only positive (X)
+    - thrust: check for acceptability (V)
+    - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (X)
+    - altitude_start: should not be performed before round_1 (X)
+    - gravity: needs altitude adjustement (X)
+    - negative altitude in launch scenario needs to be adressed (X)
 
 */
 
