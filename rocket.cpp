@@ -36,3 +36,136 @@
 5. The game ends;
 
 */
+
+// Constants
+const double time_count = 1;
+const double planet_mass_moon = 1;
+const double planet_mass_earth = 6;
+const double gravity_moon = 1.625; // Moon's gravity
+const double gravity_earth = 9.81; // Earth's gravity
+
+// Display
+void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
+{
+    std::cout << "Scenario Parameters:\n";
+    std::cout << "Starting Altitude: " << altitude_start << " meters\n";
+    std::cout << "Target Altitude: " << altitude_goal << " meters\n";
+    std::cout << "Starting Speed: " << speed_start << " m/s\n";
+    std::cout << "Target Speed: " << speed_goal << " m/s\n";
+    std::cout << "Fuel: " << fuel << " litres\n";
+    std::cout << "Planet Mass: " << planet_mass << "\n";
+}
+
+/*  still missing:
+
+    - check for not acceptable thrust
+    - full check for altitude_goal
+    - not right altitude at start
+    - right gravity calculation
+
+
+*/
+
+// Logic...
+void runScenario(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
+{
+    double altitude = altitude_start;
+    double speed = speed_start;
+
+    while (altitude != altitude_goal) {
+        double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
+        
+        altitude -= speed;
+        speed += gravity * time_count/10;
+
+        double thrust;
+        std::cout << "Current altitude: " << altitude << " meters\n";
+        std::cout << "Current speed: " << speed << " m/s\n";
+        std::cout << "Fuel left: " << fuel <<  " litres\n";
+        std::cout << "Enter thrust: ";
+        std::cin >> thrust;
+        std::cout << "---------------" << std::endl;
+
+        if (thrust <= fuel && thrust >= 0) 
+        {
+            fuel -= thrust;
+        } 
+        else if(thrust > fuel)
+        {
+            thrust = fuel;
+            fuel -= thrust;
+        }
+        else 
+        {
+            thrust = 0;
+            fuel -= thrust;
+        }
+
+        speed -= (thrust / 3.0) * time_count;
+    }
+
+    std::cout << "Current altitude: " << altitude << " meters\n";
+    std::cout << "Current speed: " << speed << " m/s\n";
+    std::cout << "Fuel left: " << fuel <<  " litres\n";
+    std::cout << "---------------" << std::endl;
+
+    if (speed == speed_goal) {
+        std::cout << "You won!" << std::endl;
+    } else {
+        std::cout << "You've lost!" << std::endl;
+    }
+}
+
+int main() 
+{
+    int scenario;
+    std::cout << "Choose a scenario:\n1. Launch to orbit moon\n2. Launch to orbit earth\n3. Landing on moon\n4. Landing on earth\n";
+    std::cin >> scenario;
+
+    double altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass;
+
+    switch (scenario) 
+    {
+        case 1:
+            altitude_start = 0;
+            altitude_goal = 150;
+            speed_start = 0;
+            speed_goal = 50;
+            fuel = 2000;
+            planet_mass = planet_mass_moon;
+            break;
+        case 2:
+            altitude_start = 0;
+            altitude_goal = 150;
+            speed_start = 0;
+            speed_goal = 50;
+            fuel = 2000;
+            planet_mass = planet_mass_earth;
+            break;
+        case 3:
+            altitude_start = 150;
+            altitude_goal = 0;
+            speed_start = 10;
+            speed_goal = 2;
+            fuel = 200;
+            planet_mass = planet_mass_moon;
+            break;
+        case 4:
+            altitude_start = 150;
+            altitude_goal = 0;
+            speed_start = 10;
+            speed_goal = 2;
+            fuel = 200;
+            planet_mass = planet_mass_earth;
+            break;
+        default:
+            std::cout << "Invalid scenario choice." << std::endl;
+            return 0;
+    }
+
+    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
+
+    runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
+
+    return 0;
+}
