@@ -85,12 +85,15 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         double thrust;
         std::cout << "---------------" << std::endl;
         std::cout << "Current altitude: " << altitude << " meters\n";
-        std::cout << "Current speed: " << abs(speed) << " m/s\n" <<;
-        if ( speed < 0)
+        std::cout << "Current speed: " << abs(speed) << " m/s";
+        if ( speed > 0)
         { 
             std::cout << " [DOWN]\n";
         } 
-        else " [UP]";
+        else 
+        {
+            std::cout <<" [UP]\n";
+        }
         std::cout << "Fuel left: " << fuel <<  " litres\n";
         std::cout << "Enter thrust: ";
         std::cin >> thrust;
