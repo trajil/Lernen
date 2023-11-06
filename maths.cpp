@@ -8,7 +8,6 @@ int spalten_breite;
 
 
 
-
 int main()
 {
     int abort = 0;
