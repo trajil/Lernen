@@ -81,20 +81,31 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     while ((launch == true && altitude <= altitude_goal) || (launch == false && altitude >= altitude_goal))
     {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
-        
 
         double thrust;
         std::cout << "---------------" << std::endl;
         std::cout << "Current altitude: " << altitude << " meters\n";
-        std::cout << "Current speed: " << abs(speed) << " m/s\n";
+        std::cout << "Current speed: " << abs(speed) << " m/s\n" <<;
+        if ( speed < 0)
+        { 
+            std::cout << " [DOWN]\n";
+        } 
+        else " [UP]";
         std::cout << "Fuel left: " << fuel <<  " litres\n";
         std::cout << "Enter thrust: ";
         std::cin >> thrust;
         std::cout << "---------------" << std::endl;
 
+        if ( altitude <= 0)
+        {
+            altitude = 0;
+            speed = 0;
+        }
         altitude -= speed;
-        speed += gravity * time_count;
-        
+        if ( altitude > 0)
+        {
+            speed += gravity * time_count;
+        }
         if (thrust <= fuel && thrust >= 0) 
         {
             fuel -= thrust;
@@ -111,6 +122,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         }
 
         speed -= (thrust / 3.0) * time_count;
+        altitude -= speed;
     }
 
     std::cout << "" << std::endl;
