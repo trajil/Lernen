@@ -44,7 +44,7 @@
     - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (V)
     - altitude_start: should not be performed before round_1 (V)
     - gravity: needs altitude adjustement (X)
-    - negative altitude in launch scenario needs to be adressed (X)
+    - floor needed (X)
 
     - fine tuning the parametes... (XXX)
 
@@ -231,7 +231,10 @@ int main()
 
 
 /*
+Ideas:
 floor...
+
+
 
 DMG_Modell:
 rocket_mass = 2
