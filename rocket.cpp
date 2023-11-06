@@ -77,14 +77,17 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
 {
     double altitude = altitude_start;
     double speed = speed_start;
+    double time = 0;
     
     while ((launch == true && altitude <= altitude_goal) || (launch == false && altitude >= altitude_goal))
     {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
-        double air_resist = 1/( 1 + (speed*speed)/35000);
+        double air_resist = 1/( 1 + (speed*speed)/70000);
         double thrust;
+        time++;
 
         std::cout << "---------------" << std::endl;
+        std::cout << "Second: " << time << std::endl;
         std::cout << "Current altitude: " << altitude << " meters\n";
         std::cout << "Air_resistence_coefficient: " << air_resist << " \n";
         std::cout << "Current speed: " << abs(speed) << " m/s";
@@ -98,45 +101,60 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         }
         std::cout << "Fuel left: " << fuel <<  " litres\n";
         std::cout << "Enter thrust: ";
-        std::cin >> thrust;
+        if ( fuel > 0 && altitude > 0)
+            {
+            std::cin >> thrust;
+            }
+            else if (fuel != 0 && altitude == 0)
+            {
+            std::cin >> thrust;
+            }
+            else
+            {
+            std::cout << thrust << std::endl;
+            thrust = 0;
+            }
         std::cout << "---------------" << std::endl;
 
-        //floor...
-        if ( altitude <= 0)
+        //floor check
+        if  ( altitude <= 0)
             {
             altitude = 0;
             speed = 0;
             }
-            else if ( altitude > 0)
+            else if ( altitude > 0 )
             {
             speed = speed * air_resist + gravity * time_count;
             }
-        if (thrust <= fuel && thrust >= 0) 
-        {
+
+        //throttle and fuel control
+        if  ( thrust <= fuel && thrust >= 0) 
+            {
             fuel -= thrust;
-        } 
-        else if(thrust > fuel)
-        {
+            } 
+            else if ( thrust > fuel )
+            {
             thrust = fuel;
             fuel -= thrust;
-        }
-        else 
-        {
+            }
+            else 
+            {
             thrust = 0;
-            fuel -= thrust;
-        }
+            }
 
-        speed -= (thrust / 3.0) * time_count;
+        speed = speed * air_resist - (thrust / 3.0) * time_count;
         altitude -= speed;
     }
 
-    std::cout << "" << std::endl;
+    //display: game ending
+    std::cout << "x.X. Game Over X.x. after " << time + 1 << " seconds." << std::endl;
     std::cout << "Current altitude: " << altitude << " meters\n";
     std::cout << "Current speed: " << abs(speed) << " m/s\n";
     std::cout << "Fuel left: " << fuel <<  " litres\n";
     std::cout << "---------------" << std::endl;
     std::cout << "" << std::endl;
 
+    //check for game-ending conditions
     if (launch == true && abs(speed) >= speed_goal) 
     {
         std::cout << "" << std::endl;
@@ -185,8 +203,8 @@ int main()
             altitude_start = 0;
             altitude_goal = 5000;
             speed_start = 0;
-            speed_goal = 95;
-            fuel = 2000;
+            speed_goal = 100;
+            fuel = 6800;
             planet_mass = planet_mass_moon;
             launch = true;
             break;
@@ -195,8 +213,8 @@ int main()
             altitude_start = 0;
             altitude_goal = 5000;
             speed_start = 0;
-            speed_goal = 95;
-            fuel = 2000;
+            speed_goal = 100;
+            fuel = 7500;
             planet_mass = planet_mass_earth;
             launch = true;
             break;
