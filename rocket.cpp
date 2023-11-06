@@ -215,5 +215,13 @@ int main()
 }
 
 
-// if (thrust == 0)
-// alt = 0
+/*
+floor...
+
+DMG_Modell:
+rocket_mass = 2
+rocket_hp = 100
+energy = rocket_mass * speed
+rocket_hp = rocket_hp - energy
+if 0 -> dead
+*/
