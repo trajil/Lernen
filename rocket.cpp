@@ -44,9 +44,13 @@
     - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (V)
     - altitude_start: should not be performed before round_1 (V)
     - gravity: needs altitude adjustement (X)
-    - floor needed (X)
+    - floor needed (V)
+    - air resistance (V)
 
-    - fine tuning the parametes... (XXX)
+    - cleaning code (XXX)
+    - including ideas (XXX)
+    - 
+    - fine tuning the parameters... (VXX)
 
 */
 
@@ -57,6 +61,7 @@ const double planet_mass_earth = 6; // work in progress...
 const double gravity_moon = 1.625; 
 const double gravity_earth = 9.81; 
 
+// replay function
 bool askForReplay() 
 {
     char choice;
@@ -65,7 +70,7 @@ bool askForReplay()
     return (choice == 'Y' || choice == 'y');
 }
 
-// display
+// display: start of the game
 void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, std::string planet) 
 {
     std::cout << "\nScenario Parameters:\n";
@@ -85,6 +90,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     double speed = speed_start;
     double time = 0;
     
+    // while game is running
     while ((launch == true && altitude <= altitude_goal) || (launch == false && altitude >= altitude_goal))
     {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
@@ -265,7 +271,6 @@ int main()
 
 /*
 Ideas:
-floor...
 
 
 
