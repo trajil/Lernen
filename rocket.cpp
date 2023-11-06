@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 /*
 1. The world is loaded with
@@ -57,7 +58,7 @@ const double gravity_moon = 1.625;
 const double gravity_earth = 9.81; 
 
 // display
-void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, bool launch) 
+void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
 {
     std::cout << "Scenario Parameters:\n";
     std::cout << "Starting Altitude: " << altitude_start << " meters\n";
@@ -84,7 +85,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         double thrust;
         std::cout << "---------------" << std::endl;
         std::cout << "Current altitude: " << altitude << " meters\n";
-        std::cout << "Current speed: " << speed << " m/s\n";
+        std::cout << "Current speed: " << abs(speed) << " m/s\n";
         std::cout << "Fuel left: " << fuel <<  " litres\n";
         std::cout << "Enter thrust: ";
         std::cin >> thrust;
@@ -110,16 +111,23 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
 
     std::cout << "" << std::endl;
     std::cout << "Current altitude: " << altitude << " meters\n";
-    std::cout << "Current speed: " << speed << " m/s\n";
+    std::cout << "Current speed: " << abs(speed) << " m/s\n";
     std::cout << "Fuel left: " << fuel <<  " litres\n";
     std::cout << "---------------" << std::endl;
     std::cout << "" << std::endl;
 
-    if (speed == speed_goal) 
+    if (launch == true && speed >= speed_goal) 
     {
         std::cout << "" << std::endl;
         std::cout << "You won!" << std::endl;
-    } else 
+    }
+    else if (launch == false && speed <= speed_goal)
+    {
+        std::cout << "" << std::endl;
+        std::cout << "You won!" << std::endl;
+
+    }
+    else 
     {
         std::cout << "" << std::endl;
         std::cout << "You've lost!" << std::endl;
@@ -152,7 +160,7 @@ int main()
     {
         case 1:
             altitude_start = 0;
-            altitude_goal = 150;
+            altitude_goal = 500;
             speed_start = 0;
             speed_goal = 50;
             fuel = 2000;
@@ -161,7 +169,7 @@ int main()
             break;
         case 2:
             altitude_start = 0;
-            altitude_goal = 150;
+            altitude_goal = 500;
             speed_start = 0;
             speed_goal = 50;
             fuel = 2000;
@@ -191,7 +199,7 @@ int main()
             return 0;
     }
 
-    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
+    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
 
     runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
 
