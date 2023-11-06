@@ -39,10 +39,10 @@
 
   To-Do:
 
-    - speed: should be only positive (X)
+    - speed: should be only positive (V)
     - thrust: check for acceptability (V)
-    - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (X)
-    - altitude_start: should not be performed before round_1 (X)
+    - altitude_goal: full check -> launch_scenario: >= 150; landing_scenario: >= 0 (V)
+    - altitude_start: should not be performed before round_1 (V)
     - gravity: needs altitude adjustement (X)
     - negative altitude in launch scenario needs to be adressed (X)
 
@@ -57,10 +57,13 @@ const double planet_mass_earth = 6; // work in progress...
 const double gravity_moon = 1.625; 
 const double gravity_earth = 9.81; 
 
+
+
 // display
-void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass) 
+void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, std::string planet) 
 {
-    std::cout << "Scenario Parameters:\n";
+    std::cout << "\nScenario Parameters:\n";
+    std::cout << "Planet: " << planet << "\n";   
     std::cout << "Starting Altitude: " << altitude_start << " meters\n";
     std::cout << "Target Altitude: " << altitude_goal << " meters\n";
     std::cout << "Starting Speed: " << speed_start << " m/s\n";
@@ -79,8 +82,6 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
         
-        altitude -= speed;
-        speed += gravity * time_count/10;
 
         double thrust;
         std::cout << "---------------" << std::endl;
@@ -91,6 +92,9 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
         std::cin >> thrust;
         std::cout << "---------------" << std::endl;
 
+        altitude -= speed;
+        speed += gravity * time_count;
+        
         if (thrust <= fuel && thrust >= 0) 
         {
             fuel -= thrust;
@@ -116,12 +120,12 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     std::cout << "---------------" << std::endl;
     std::cout << "" << std::endl;
 
-    if (launch == true && speed >= speed_goal) 
+    if (launch == true && abs(speed) >= speed_goal) 
     {
         std::cout << "" << std::endl;
         std::cout << "You won!" << std::endl;
     }
-    else if (launch == false && speed <= speed_goal)
+    else if (launch == false && abs(speed) <= speed_goal)
     {
         std::cout << "" << std::endl;
         std::cout << "You won!" << std::endl;
@@ -154,30 +158,34 @@ int main()
     std::cin >> scenario;
 
     double altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass;
+    std::string planet;
     bool launch;
 
     switch (scenario) 
     {
         case 1:
+            planet = "moon";
             altitude_start = 0;
-            altitude_goal = 500;
+            altitude_goal = 5000;
             speed_start = 0;
-            speed_goal = 50;
+            speed_goal = 95;
             fuel = 2000;
             planet_mass = planet_mass_moon;
             launch = true;
             break;
         case 2:
+            planet = "earth";
             altitude_start = 0;
-            altitude_goal = 500;
+            altitude_goal = 5000;
             speed_start = 0;
-            speed_goal = 50;
+            speed_goal = 95;
             fuel = 2000;
             planet_mass = planet_mass_earth;
             launch = true;
             break;
         case 3:
-            altitude_start = 150;
+            planet = "moon";
+            altitude_start = 900;
             altitude_goal = 0;
             speed_start = 10;
             speed_goal = 2;
@@ -186,7 +194,8 @@ int main()
             launch = false;
             break;
         case 4:
-            altitude_start = 150;
+            planet = "earth";
+            altitude_start = 900;
             altitude_goal = 0;
             speed_start = 10;
             speed_goal = 2;
@@ -199,9 +208,12 @@ int main()
             return 0;
     }
 
-    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass);
-
+    displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, planet);
     runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
 
     return 0;
 }
+
+
+// if (thrust == 0)
+// alt = 0
