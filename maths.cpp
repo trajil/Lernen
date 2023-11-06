@@ -11,6 +11,9 @@ int spalten_breite;
 int main()
 {
     int abort = 0;
+    double test = 5^2;
+
+    cout << test;
 
     string welcome = "Tabellenerstellung: Bitte Zeilen- und Spaltenmenge eingeben. (Type " + to_string(abort) + " to exit)";
     do
