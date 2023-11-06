@@ -57,7 +57,13 @@ const double planet_mass_earth = 6; // work in progress...
 const double gravity_moon = 1.625; 
 const double gravity_earth = 9.81; 
 
-
+bool askForReplay() 
+{
+    char choice;
+    std::cout << "Do you want to play again? (Y/N): ";
+    std::cin >> choice;
+    return (choice == 'Y' || choice == 'y');
+}
 
 // display
 void displayScenarioParameters(double altitude_start, double altitude_goal, double speed_start, double speed_goal, double fuel, double planet_mass, std::string planet) 
@@ -176,6 +182,10 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
 // programm
 int main() 
 {
+    bool replay = true;
+
+    while (replay == true)
+    {
     int scenario;
 
     std::cout << "" << std::endl;
@@ -245,7 +255,10 @@ int main()
 
     displayScenarioParameters(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, planet);
     runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
-
+    
+    replay = askForReplay();
+    
+    }
     return 0;
 }
 
