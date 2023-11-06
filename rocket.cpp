@@ -1,5 +1,8 @@
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <unistd.h>
+
 
 /*
 1. The world is loaded with
@@ -125,6 +128,8 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
             {
             std::cout << thrust << std::endl;
             thrust = 0;
+            std::cout.flush();
+            usleep(200000);
             }
         std::cout << "---------------" << std::endl;
 
