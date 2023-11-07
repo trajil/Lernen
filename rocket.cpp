@@ -129,7 +129,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
             std::cout << thrust << std::endl;
             thrust = 0;
             std::cout.flush();
-            usleep(200000);
+            usleep(300000);
             }
         std::cout << "---------------" << std::endl;
 
@@ -245,7 +245,7 @@ int main()
             altitude_goal = 0;
             speed_start = 10;
             speed_goal = 2;
-            fuel = 200;
+            fuel = 600;
             planet_mass = planet_mass_moon;
             launch = false;
             break;
@@ -255,7 +255,7 @@ int main()
             altitude_goal = 0;
             speed_start = 10;
             speed_goal = 2;
-            fuel = 200;
+            fuel = 600;
             planet_mass = planet_mass_earth;
             launch = false;
             break;
