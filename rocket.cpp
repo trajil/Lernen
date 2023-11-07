@@ -78,12 +78,12 @@ void displayScenarioParameters(double altitude_start, double altitude_goal, doub
 {
     std::cout << "\nScenario Parameters:\n";
     std::cout << "Planet: " << planet << "\n";   
-    std::cout << "Starting Altitude: " << altitude_start << " meters\n";
+    //std::cout << "Starting Altitude: " << altitude_start << " meters\n";
     std::cout << "Target Altitude: " << altitude_goal << " meters\n";
-    std::cout << "Starting Speed: " << speed_start << " m/s\n";
-    std::cout << "Target Speed: " << speed_goal << " m/s\n";
-    std::cout << "Fuel: " << fuel << " litres\n";
-    std::cout << "Planet Mass: " << planet_mass << "\n";
+    //std::cout << "Starting Speed: " << speed_start << " m/s\n";
+    std::cout << "TARGET SPEED: " << speed_goal << " m/s\n";
+    //std::cout << "Fuel: " << fuel << " litres\n";
+    //std::cout << "Planet Mass: " << planet_mass << "\n";
 }
 
 // logic...
@@ -92,12 +92,17 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
     double altitude = altitude_start;
     double speed = speed_start;
     double time = 0;
+    double hp = 100;
+    double mass_rocket = 3;
+    double energy;
+
+    // HP START
     
     // while game is running
-    while ((launch == true && altitude <= altitude_goal) || (launch == false && altitude >= altitude_goal))
+    while ((launch == true && altitude <= altitude_goal && hp >= 0) || (launch == false && altitude >= altitude_goal && hp >= 0))
     {
         double gravity = (planet_mass == planet_mass_moon) ? gravity_moon : gravity_earth;
-        double air_resist = 1/( 1 + (speed*speed)/70000);
+        double air_resist = 1/( 1 + 1/((abs(speed))/13000) + (speed*speed)/300000);
         double thrust;
         time++;
 
@@ -115,6 +120,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
             std::cout <<" [UP]\n";          // FLIGHT INDICATOR UP
         }
         std::cout << "Fuel left: " << fuel <<  " litres\n";
+        std::cout << "Health: " << hp <<  " \n";
         std::cout << "Enter thrust: ";
         if ( fuel > 0 && altitude > 0)
             {
@@ -129,7 +135,7 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
             std::cout << thrust << std::endl;
             thrust = 0;
             std::cout.flush();
-            usleep(300000);
+            usleep(200000);
             }
         std::cout << "---------------" << std::endl;
 
@@ -161,32 +167,45 @@ void runScenario(double altitude_start, double altitude_goal, double speed_start
 
         speed = speed * air_resist - (thrust / 3.0) * time_count;
         altitude -= speed;
+
+
+        //Damage Check
+        if (altitude <= 0 && abs(speed) > 0)
+            {
+            energy = abs(speed) * mass_rocket;
+            hp-= energy;
+            }
+
     }
+
+
 
     //display: game ending
     std::cout << "x.X. Game Over X.x. after " << time + 1 << " seconds." << std::endl;
-    std::cout << "Current altitude: " << altitude << " meters\n";
-    std::cout << "Current speed: " << abs(speed) << " m/s\n";
+    //std::cout << "Current altitude: " << altitude << " meters\n";
+    std::cout << "End speed: " << abs(speed) << " m/s\n";
     std::cout << "Fuel left: " << fuel <<  " litres\n";
+    std::cout << "Health: " << hp <<  " \n";
     std::cout << "---------------" << std::endl;
     std::cout << "" << std::endl;
 
     //check for game-ending conditions
-    if (launch == true && abs(speed) >= speed_goal) 
-    {
-        std::cout << "" << std::endl;
-        std::cout << "You won!" << std::endl;
-    }
-    else if (launch == false && abs(speed) <= speed_goal)
-    {
-        std::cout << "" << std::endl;
-        std::cout << "You won!" << std::endl;
 
-    }
-    else 
+    if (hp <= 0 )
     {
         std::cout << "" << std::endl;
-        std::cout << "You've lost!" << std::endl;
+        std::cout << "You Crashed!" << std::endl;
+    }
+    else if (launch == true && abs(speed) >= speed_goal || launch == false && hp > 0) 
+    {
+        std::cout << "" << std::endl;
+        std::cout << "You won!" << std::endl;
+    }
+    
+    else     
+    {
+        std::cout << "" << std::endl;
+        std::cout << "Too slow..." << std::endl;
     }
 }
 
