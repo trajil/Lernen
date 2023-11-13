@@ -302,6 +302,8 @@ int main()
     runScenario(altitude_start, altitude_goal, speed_start, speed_goal, fuel, planet_mass, launch);
     
     replay = askForReplay();
+
+
     
     }
     return 0;
