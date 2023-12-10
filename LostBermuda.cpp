@@ -14,7 +14,7 @@ void turn(char player);
 void check_for_loser();
 
 int const columns = 8;
-int const rows = 5;
+int const rows = 8;
 int counting_a = 0;
 int counting_b = 0;
 double spawnrate = 0.1;
@@ -87,9 +87,9 @@ void spawn_ship_A()
     int erwartungswert_a = rows * columns * spawnrate;
     do
     {
-        for (int i = 0; i < rows; i++)
+        for (int i = 1; i < rows; i++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int j = 1; j < columns; j++)
             {
                 bool spawn = false;
                 rand() % (100) <= (spawnrate * 100) ? spawn = true : spawn = false;
@@ -113,9 +113,9 @@ void spawn_ship_B()
     int erwartungswert_b = rows * columns * spawnrate;
     do
     {
-        for (int i = 0; i < rows; i++)
+        for (int i = 1; i < rows; i++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int j = 1; j < columns; j++)
             {
                 bool spawn = false;
                 rand() % (100) <= (spawnrate * 100) ? spawn = true : spawn = false;
@@ -214,13 +214,21 @@ void turn(char player)
 
 void fill_map()
 {
-    for (int i = 0; i < rows; i++)
+    for (int i = 1; i < rows; i++)
     {
-        for (int j = 0; j < columns; j++)
+        for (int j = 1; j < columns; j++)
         {
 
             map[i][j] = water;
         }
+    }
+    for (int i = 0; i < rows; i++)
+    {
+        map[i][0] = '0' + i;
+    }
+    for (int j = 0; j < columns; j++)
+    {
+        map[0][j] = '0' + j;
     }
 }
 
@@ -233,20 +241,23 @@ void display_map()
             switch (map[i][j])
             {
             case symbol_sunken_ship_A:
-                std::cout << symbol_sunken_ship_A << " ";
+                std::cout << symbol_sunken_ship_A << "   ";
                 break;
             case symbol_sunken_ship_B:
-                std::cout << symbol_sunken_ship_B << " ";
+                std::cout << symbol_sunken_ship_B << "   ";
                 break;
             case spawned_ship_A:
-                std::cout << spawned_ship_A << " ";
+                std::cout << spawned_ship_A << "   ";
                 break;
             case spawned_ship_B:
-                std::cout << spawned_ship_B << " ";
+                std::cout << spawned_ship_B << "   ";
+                break;
+            case water:
+                std::cout << water << "   ";
                 break;
 
             default:
-                std::cout << water << " ";
+                std::cout << map[i][j] << "   ";
                 break;
             };
         }
@@ -254,6 +265,7 @@ void display_map()
     }
 }
 
+// for debugging
 void count_remaining_ships()
 {
     double remaining_ships_A = 0;
