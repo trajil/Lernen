@@ -12,16 +12,18 @@ void display_map();
 void count_remaining_ships();
 void turn(char player);
 void check_for_loser();
+void display_player_stats();
 
-int const columns = 8;
-int const rows = 8;
+int const columns = 6;
+int const rows = 6;
 int counting_a = 0;
 int counting_b = 0;
 double spawnrate = 0.1;
 
 char map[rows][columns];
 
-char const water = '.';
+char const water = '~';
+char const shot = 'X';
 char const spawned_ship_A = 'p';
 char const spawned_ship_B = 'n';
 char const symbol_sunken_ship_A = 'P';
@@ -41,6 +43,7 @@ int main()
 
     do
     {
+        display_player_stats();
         display_map();
         turn('A');
         turn('B');
@@ -141,19 +144,20 @@ void target_control_A(int c, int r)
     case spawned_ship_B:
         map[c][r] = symbol_sunken_ship_B;
         counting_b--;
-        std::cout << "Got that one!\n";
+        std::cout << ">>> Got that one!\n";
         break;
     case symbol_sunken_ship_B:
-        std::cout << "Drunkin' bastard, we already hit that one!\n";
+        std::cout << ">>> Drunkin' bastard, we already hit that one!\n";
         break;
     case spawned_ship_A:
-        std::cout << "Muteny...that's one of our guys!\n";
+        std::cout << ">>> Muteny...that's one of our guys!\n";
         break;
     case symbol_sunken_ship_A:
-        std::cout << "Dammit - that poor bastard 's already drowin'!\n";
+        std::cout << ">>> Dammit - that poor bastard 's already drowin'!\n";
         break;
     default:
-        std::cout << "Arrr!!! A miss...\n";
+        map[c][r] = shot;
+        std::cout << ">>> Arrr!!! A miss...\n";
         break;
     }
 }
@@ -164,20 +168,21 @@ void target_control_B(int c, int r)
     {
     case spawned_ship_A:
         map[c][r] = symbol_sunken_ship_A;
-        std::cout << "Got that one!\n";
+        std::cout << ">>> Got that one!\n";
         counting_a--;
         break;
     case symbol_sunken_ship_A:
-        std::cout << "Sir, this target is already eliminated.\n";
+        std::cout << ">>> Sir, this target is already eliminated.\n";
         break;
     case spawned_ship_B:
-        std::cout << "With all due respect, Sir, but this one belongs to us.\n";
+        std::cout << ">>> With all due respect, Sir, but this one belongs to us.\n";
         break;
     case symbol_sunken_ship_B:
-        std::cout << "Sir, we need to help those men - not shoot them!\n";
+        std::cout << ">>> Sir, we need to help those men - not shoot them!\n";
         break;
     default:
-        std::cout << "We didn't hit anything, Sir.\n";
+        map[c][r] = shot;
+        std::cout << ">>> We didn't hit anything, Sir.\n";
         break;
     }
 }
@@ -187,23 +192,19 @@ void turn(char player)
     int target_row, target_column;
     if (player == 'A')
     {
-        std::cout << "Pirate, send 'em to hell!\nColumn: ";
+        std::cout << "\n\nPirate, send 'em to hell!\nColumn: ";
         std::cin >> target_column;
-        std::cout << "\nRow: ";
+        std::cout << "Row: ";
         std::cin >> target_row;
-        std::cout << std::endl;
         target_control_A(target_row, target_column);
-        std::cout << "Royal fleet left: " << counting_b << "\n\n\n";
     }
     else if (player == 'B')
     {
-        std::cout << "Admiral, we need your fire coordinance!\nColumn: ";
+        std::cout << "\n\nAdmiral, we need your fire coordinance!\nColumn: ";
         std::cin >> target_column;
-        std::cout << "\nRow: ";
+        std::cout << "Row: ";
         std::cin >> target_row;
-        std::cout << std::endl;
         target_control_B(target_row, target_column);
-        std::cout << "Dirty pirates left: " << counting_a << "\n\n\n";
     }
 
     else
@@ -232,6 +233,11 @@ void fill_map()
     }
 }
 
+void display_player_stats()
+{
+    std::cout << " Pirates: (" << counting_a << ") Navy: (" << counting_b << ")\n";
+}
+
 void display_map()
 {
     for (int i = 0; i < rows; i++)
@@ -247,10 +253,10 @@ void display_map()
                 std::cout << symbol_sunken_ship_B << "   ";
                 break;
             case spawned_ship_A:
-                std::cout << spawned_ship_A << "   ";
+                std::cout << water << "   ";
                 break;
             case spawned_ship_B:
-                std::cout << spawned_ship_B << "   ";
+                std::cout << water << "   ";
                 break;
             case water:
                 std::cout << water << "   ";
