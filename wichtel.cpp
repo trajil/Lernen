@@ -1,12 +1,12 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <fstream>
 #include <ctime>
 
-int numberOfNames;
+int numberOfNames, wait;
 
-std::vector<std::string> names;
+std::vector<std::string> fileNames;
+std::vector<std::string> contentNames;
 
 void inputNumberOfNames()
 {
@@ -16,48 +16,43 @@ void inputNumberOfNames()
 
 void inputNames()
 {
-    std::cout << "Enter the names, one at a time:" << std::endl;
+    std::cout << "Enter the names, one at a time: ";
     for (int i = 0; i < numberOfNames; ++i)
     {
         std::string name;
         std::cin >> name;
-        names.push_back(name);
+        fileNames.push_back(name);
     }
 }
 
 int main()
 {
+    std::srand(std::time(0));
 
     inputNumberOfNames();
     inputNames();
-
-    // Seed the random number generator
-    std::srand(static_cast<unsigned int>(std::time(0)));
-
-    // Shuffle the names
-    std::random_shuffle(names.begin(), names.end());
-
-    // Output the shuffled names to individual text files
+    contentNames = fileNames;
+    int remainingNames = numberOfNames;
+    
     for (int i = 0; i < numberOfNames; ++i)
     {
-        // Create a file for each name
-        std::ofstream outputFile(names[i] + ".txt");
-        if (!outputFile)
+        int randomIndex = std::rand() % (remainingNames);
+
+        std::ofstream outputFile(fileNames[0] + ".txt");
+
+        while (fileNames[0] == contentNames[randomIndex])
         {
-            std::cerr << "Error opening file for writing. Exiting program." << std::endl;
-            return 1;
+            randomIndex = std::rand() % (remainingNames);
         }
+        outputFile << contentNames[randomIndex] << std::endl;
+        contentNames.erase(contentNames.begin() + (randomIndex));
 
-        // Shuffle the names excluding the current one
-        std::vector<std::string> otherNames = names;
-        otherNames.erase(otherNames.begin() + i);
-        std::random_shuffle(otherNames.begin(), otherNames.end());
+        std::cout << "File " << fileNames[0] << ".txt created." << std::endl;
+        fileNames.erase(fileNames.begin() + 0);
 
-        // Write one shuffled name to the file
-        outputFile << otherNames[std::rand() % (numberOfNames - 1)] << std::endl;
-
-        std::cout << "File " << names[i] << ".txt created." << std::endl;
+        remainingNames--;
     }
+    std::cin >> wait;
 
     return 0;
 }
