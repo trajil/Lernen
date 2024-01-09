@@ -57,6 +57,7 @@
         "thread": "cpp",
         "variant": "cpp",
         "fstream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "bitset": "cpp"
     }
 }
