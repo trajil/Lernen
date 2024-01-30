@@ -28,6 +28,6 @@ def main():
     end_time = time.time()  # End timing
     #print(f"Password generated: {password}")
     print(f"Execution time: {end_time - start_time} seconds")
-
+    wait = input("")
 if __name__ == "__main__":
     main()
