@@ -48,5 +48,5 @@ Replace output_name with your desired executable name and source_file.cpp with t
 
 All projects in this repository are open source, under the MIT License.
 
-Acknowledgments
-My homies Viktor and Nikolay!
+## Acknowledgments
+My homies Viktor, Johnny and Nikolay!
