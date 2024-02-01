@@ -43,7 +43,8 @@ Then run the compiled executable:
 ./output_name
 
 Replace output_name with your desired executable name and source_file.cpp with the source file you're compiling.
-License
+
+## License
 
 All projects in this repository are open source, under the MIT License.
 
