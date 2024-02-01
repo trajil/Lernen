@@ -38,10 +38,11 @@ To run any of the programs, you'll need a C++ compiler such as `g++`. Compile a 
 
 ```sh
 g++ -o output_name source_file.cpp
-
+´´´
 Then run the compiled executable:
+```sh
 ./output_name
-
+´´´
 Replace output_name with your desired executable name and source_file.cpp with the source file you're compiling.
 License
 
